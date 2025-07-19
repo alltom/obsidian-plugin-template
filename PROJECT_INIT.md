@@ -17,13 +17,40 @@ Before starting, you'll need to decide on the following information:
 
 ## Step-by-Step Setup
 
-### 1. Initialize Project Structure
+### 1. Create Initial Task List
+
+Create `TODO.md` with the following content:
+
+```markdown
+# Project Setup
+
+- [ ] Create and commit project structure
+- [ ] Create and commit `.gitignore`
+- [ ] Create `package.json` and commit
+- [ ] Customize `package.json` and commit
+- [ ] Install and commit dependencies
+- [ ] Initialize GTS and commit
+- [ ] Add and commit `package.json` scripts
+- [ ] Configure and commit ESLint
+- [ ] Configure and commit TypeScript
+- [ ] Configure and commit EditorConfig
+- [ ] Create and commit build/deploy scripts
+- [ ] Create and commit plugin source files
+- [ ] Set up and commit git pre-commit hook
+- [ ] Create and commit `.env` file
+- [ ] Create and commit basic test
+- [ ] Create and commit `README.md`
+- [ ] Perform initial verification steps
+- [ ] Delete TODO.md
+```
+
+### 2. Initialize Project Structure
 
 ```bash
 mkdir -p src test scripts build
 ```
 
-### 2. Create Git Configuration
+### 3. Create Git Configuration
 
 Create `.gitignore`:
 
@@ -35,7 +62,7 @@ build/
 
 Now, stage and commit the changes with the message 'create .gitignore'.
 
-### 3. Create `package.json`
+### 4. Create `package.json`
 
 Use `npm init` with flags to pre-fill the `package.json` file. Replace the bracketed placeholders with your actual values.
 
@@ -58,7 +85,7 @@ Next, edit the generated `package.json` file:
 
 Now, stage and commit the changes with the message 'customize package.json'.
 
-### 4. Install Dependencies
+### 5. Install Dependencies
 
 ```bash
 npm install --save-dev dotenv esbuild gts obsidian typescript builtin-modules
@@ -66,7 +93,7 @@ npm install --save-dev dotenv esbuild gts obsidian typescript builtin-modules
 
 Now, stage and commit the changes with the message 'npm install --save-dev dotenv esbuild gts obsidian typescript builtin-modules'.
 
-### 5. Initialize GTS
+### 6. Initialize GTS
 
 ```bash
 # Initialize Google TypeScript Style (creates tsconfig.json, .eslintrc.json, .prettierrc.js, and more)
@@ -78,7 +105,7 @@ rm src/index.ts
 
 Now, stage and commit the changes with the message 'npx gts init --yes'.
 
-### 6. Add and revise scripts in package.json
+### 7. Add and revise scripts in package.json
 
 Edit package.json to include this block:
 
@@ -105,7 +132,7 @@ Edit package.json to include this block:
 
 Now, stage and commit the changes with the message 'add scripts package.json'.
 
-### 7. Customize Generated Configuration Files
+### 8. Customize Generated Configuration Files
 
 The `npx gts init` command creates several configuration files. You'll need to customize some of them:
 
@@ -146,7 +173,7 @@ Now, stage and commit the changes with the message 'configure eslint'.
 
 Now, stage and commit the changes with the message 'configure typescript'.
 
-### 8. Update EditorConfig
+### 9. Update EditorConfig
 
 Note: GTS already created `.editorconfig`. Verify it contains:
 
@@ -163,7 +190,7 @@ insert_final_newline = true
 
 If any changes were necessary, stage and commit the changes with the message 'configure editor'.
 
-### 9. Create Build and Deploy Scripts
+### 10. Create Build and Deploy Scripts
 
 Create `esbuild.config.mjs` (this is a hand-written configuration file specific to your project):
 
@@ -244,7 +271,7 @@ console.log("Deployed to", pluginDir);
 
 Now, stage and commit the changes with the message 'create build and deploy scripts'.
 
-### 10. Create Plugin Source Files
+### 11. Create Plugin Source Files
 
 Create `src/manifest.json`:
 
@@ -280,7 +307,7 @@ export default class [PLUGIN_NAME]Plugin extends Plugin {
 
 Now, stage and commit the changes with the message 'create plugin source files'.
 
-### 11. Set Up Git Hooks
+### 12. Set Up Git Hooks
 
 Create `.git/hooks/pre-commit`:
 
@@ -297,7 +324,7 @@ chmod +x .git/hooks/pre-commit
 
 Now, stage and commit the changes with the message 'set up pre-commit hook'.
 
-### 12. Set Up Local Development Environment
+### 13. Set Up Local Development Environment
 
 Create `.env` file:
 
@@ -307,7 +334,7 @@ OBSIDIAN_PLUGIN_PATH=[VAULT_PATH]/.obsidian/plugins/[PLUGIN_ID]
 
 Now, stage and commit the changes with the message 'create .env file'.
 
-### 13. Create Basic Test
+### 14. Create Basic Test
 
 Create `test/main.test.ts`:
 
@@ -323,7 +350,7 @@ void test("basic test infrastructure works", () => {
 
 Now, stage and commit the changes with the message 'create basic test'.
 
-### 14. Create README.md
+### 15. Create README.md
 
 Compose a standard README.md based on what you can glean about the project. Add the sections that are commonly found in a GitHub project.
 
@@ -362,6 +389,10 @@ After completing the setup:
    ```bash
    npm run package
    ```
+
+### 16. Delete TODO.md
+
+Delete TODO.md
 
 ## Notes
 
