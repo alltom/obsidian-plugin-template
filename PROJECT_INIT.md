@@ -37,17 +37,23 @@ Now, stage and commit the changes with the message 'create .gitignore'.
 
 ### 3. Create `package.json`
 
+Use `npm init` with flags to pre-fill the `package.json` file. Replace the bracketed placeholders with your actual values.
+
 ```bash
-npm init -y
+npm init -y \
+  --init-author-name="[AUTHOR_NAME]" \
+  --init-author-email="[AUTHOR_EMAIL]" \
+  --init-author-url="[AUTHOR_URL]" \
+  --init-license="[LICENSE]"
 ```
 
-Now, stage and commit the changes with the message 'npm init -y'.
+Now, stage and commit the changes. The commit message should be the command you ran, including all flags and values.
 
 Next, edit the generated `package.json` file:
 
 - Change `main` to `"main.js"`.
 - Update `name` to your `[PLUGIN_ID]`.
-- Fill in the `description`, `author`, and `license` fields with the values from the "Prerequisites" section.
+- Fill in the `description` with the value from the "Prerequisites" section.
 - Remove any placeholder fields that aren't appropriate for the project or that we won't need, like the 'test' script that just prints an error.
 
 Now, stage and commit the changes with the message 'customize package.json'.
