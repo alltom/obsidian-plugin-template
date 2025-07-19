@@ -23,18 +23,17 @@ Before starting, you'll need to decide on the following information:
 mkdir -p src test scripts build
 ```
 
-### 2. Create a minimal package.json
+### 2. Create `package.json`
 
-```json
-{
-  "name": "[PLUGIN_ID]",
-  "version": "1.0.0",
-  "description": "[PLUGIN_DESCRIPTION]",
-  "main": "main.js",
-  "author": "[AUTHOR_NAME] <[AUTHOR_EMAIL]>",
-  "license": "[LICENSE]"
-}
+```bash
+npm init -y
 ```
+
+Next, edit the generated `package.json` file:
+- Change `main` to `"main.js"`.
+- Update `name` to your `[PLUGIN_ID]`.
+- Fill in the `description`, `author`, and `license` fields with the values from the "Prerequisites" section.
+
 
 ### 3. Install Dependencies
 
