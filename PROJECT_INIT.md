@@ -15,42 +15,19 @@ Before starting, you'll need to decide on the following information:
 7. **Author Email** - For the package.json author field
 8. **Local Obsidian Vault Path** - The path to your Obsidian vault for testing (e.g., `/Users/yourname/Documents/MyVault`)
 
+## Planning and Preparation
+
+Before you begin, it's a good idea to have a plan for tracking your progress. You can create a simple checklist or a more detailed project plan. Make sure you have gathered all the information listed in the "Prerequisites" section above.
+
 ## Step-by-Step Setup
 
-### 1. Create Initial Task List
-
-Create `TODO.md` with the following content:
-
-```markdown
-# Project Setup
-
-- [ ] Create and commit project structure
-- [ ] Create and commit `.gitignore`
-- [ ] Create `package.json` and commit
-- [ ] Customize `package.json` and commit
-- [ ] Install and commit dependencies
-- [ ] Initialize GTS and commit
-- [ ] Add and commit `package.json` scripts
-- [ ] Configure and commit ESLint
-- [ ] Configure and commit TypeScript
-- [ ] Configure and commit EditorConfig
-- [ ] Create and commit build/deploy scripts
-- [ ] Create and commit plugin source files
-- [ ] Set up and commit git pre-commit hook
-- [ ] Create and commit `.env` file
-- [ ] Create and commit basic test
-- [ ] Create and commit `README.md`
-- [ ] Perform initial verification steps
-- [ ] Delete TODO.md
-```
-
-### 2. Initialize Project Structure
+### 1. Initialize Project Structure
 
 ```bash
 mkdir -p src test scripts build
 ```
 
-### 3. Create Git Configuration
+### 2. Create Git Configuration
 
 Create `.gitignore`:
 
@@ -62,7 +39,7 @@ build/
 
 Now, stage and commit the changes with the message 'create .gitignore'.
 
-### 4. Create `package.json`
+### 3. Create `package.json`
 
 Use `npm init` with flags to pre-fill the `package.json` file. Replace the bracketed placeholders with your actual values.
 
@@ -85,7 +62,15 @@ Next, edit the generated `package.json` file:
 
 Now, stage and commit the changes with the message 'customize package.json'.
 
-### 5. Install Dependencies
+**Verification:**
+
+Run the following command to ensure `package.json` is valid. You should see your plugin ID printed with no errors.
+
+```bash
+node -p "require('./package.json').name"
+```
+
+### 4. Install Dependencies
 
 ```bash
 npm install --save-dev dotenv esbuild gts obsidian typescript builtin-modules
@@ -93,7 +78,15 @@ npm install --save-dev dotenv esbuild gts obsidian typescript builtin-modules
 
 Now, stage and commit the changes with the message 'npm install --save-dev dotenv esbuild gts obsidian typescript builtin-modules'.
 
-### 6. Initialize GTS
+**Verification:**
+
+The `npm install` command should have completed without errors. You should also see a `node_modules` directory and a `package-lock.json` file.
+
+```bash
+ls -d node_modules package-lock.json
+```
+
+### 5. Initialize GTS
 
 ```bash
 # Initialize Google TypeScript Style (creates tsconfig.json, .eslintrc.json, .prettierrc.js, and more)
@@ -105,7 +98,15 @@ rm src/index.ts
 
 Now, stage and commit the changes with the message 'npx gts init --yes'.
 
-### 7. Add and revise scripts in package.json
+**Verification:**
+
+Check that the GTS configuration files were created.
+
+```bash
+ls .eslintrc.json tsconfig.json .prettierrc.js
+```
+
+### 6. Add and revise scripts in package.json
 
 Edit package.json to include this block:
 
@@ -132,7 +133,15 @@ Edit package.json to include this block:
 
 Now, stage and commit the changes with the message 'add scripts package.json'.
 
-### 8. Customize Generated Configuration Files
+**Verification:**
+
+Run the `clean` script to verify the scripts are working.
+
+```bash
+npm run clean
+```
+
+### 7. Customize Generated Configuration Files
 
 The `npx gts init` command creates several configuration files. You'll need to customize some of them:
 
@@ -149,6 +158,14 @@ The `npx gts init` command creates several configuration files. You'll need to c
 ```
 
 Now, stage and commit the changes with the message 'configure eslint'.
+
+**Verification:**
+
+Run the linter. It's okay if it reports that no files were checked.
+
+```bash
+npm run lint
+```
 
 **Update `tsconfig.json`** for Obsidian plugin development:
 
@@ -173,7 +190,15 @@ Now, stage and commit the changes with the message 'configure eslint'.
 
 Now, stage and commit the changes with the message 'configure typescript'.
 
-### 9. Update EditorConfig
+**Verification:**
+
+Run the TypeScript compiler. It should report no errors, even if no source files are present yet.
+
+```bash
+npm run compile
+```
+
+### 8. Update EditorConfig
 
 Note: GTS already created `.editorconfig`. Verify it contains:
 
@@ -190,7 +215,7 @@ insert_final_newline = true
 
 If any changes were necessary, stage and commit the changes with the message 'configure editor'.
 
-### 10. Create Build and Deploy Scripts
+### 9. Create Build and Deploy Scripts
 
 Create `esbuild.config.mjs` (this is a hand-written configuration file specific to your project):
 
@@ -271,7 +296,7 @@ console.log("Deployed to", pluginDir);
 
 Now, stage and commit the changes with the message 'create build and deploy scripts'.
 
-### 11. Create Plugin Source Files
+### 10. Create Plugin Source Files
 
 Create `src/manifest.json`:
 
@@ -307,7 +332,15 @@ export default class [PLUGIN_NAME]Plugin extends Plugin {
 
 Now, stage and commit the changes with the message 'create plugin source files'.
 
-### 12. Set Up Git Hooks
+**Verification:**
+
+Test the build system. This will compile the source code and copy artifacts to the `build` directory.
+
+```bash
+npm run build
+```
+
+### 11. Set Up Git Hooks
 
 Create `.git/hooks/pre-commit`:
 
@@ -324,7 +357,7 @@ chmod +x .git/hooks/pre-commit
 
 Now, stage and commit the changes with the message 'set up pre-commit hook'.
 
-### 13. Set Up Local Development Environment
+### 12. Set Up Local Development Environment
 
 Create `.env` file:
 
@@ -334,7 +367,15 @@ OBSIDIAN_PLUGIN_PATH=[VAULT_PATH]/.obsidian/plugins/[PLUGIN_ID]
 
 Now, stage and commit the changes with the message 'create .env file'.
 
-### 14. Create Basic Test
+**Verification:**
+
+Test the local deployment script. This requires the `build` directory to exist from the previous step.
+
+```bash
+npm run deploy_local
+```
+
+### 13. Create Basic Test
 
 Create `test/main.test.ts`:
 
@@ -350,49 +391,19 @@ void test("basic test infrastructure works", () => {
 
 Now, stage and commit the changes with the message 'create basic test'.
 
-### 15. Create README.md
+**Verification:**
+
+Run the tests.
+
+```bash
+npm run test
+```
+
+### 14. Create README.md
 
 Compose a standard README.md based on what you can glean about the project. Add the sections that are commonly found in a GitHub project.
 
 Now, stage and commit the changes with the message 'create README.md'.
-
-## Verification Steps
-
-After completing the setup:
-
-1. **Test the build system:**
-
-   ```bash
-   npm run build
-   ```
-
-2. **Run tests:**
-
-   ```bash
-   npm test
-   ```
-
-3. **Check linting:**
-
-   ```bash
-   npm run fix
-   npm run lint
-   ```
-
-4. **Test local deployment:**
-
-   ```bash
-   npm run deploy_local
-   ```
-
-5. **Create a package:**
-   ```bash
-   npm run package
-   ```
-
-### 16. Delete TODO.md
-
-Delete TODO.md
 
 ## Notes
 
