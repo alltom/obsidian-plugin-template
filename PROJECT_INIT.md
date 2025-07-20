@@ -23,11 +23,15 @@ Before you begin, it's a good idea to have a plan for tracking your progress. Yo
 
 ### 1. Initialize Project Structure
 
+#### 1.1. Action
+
 ```bash
 mkdir -p src test scripts build
 ```
 
 ### 2. Create Git Configuration
+
+#### 2.1. Action
 
 Create `.gitignore`:
 
@@ -37,9 +41,13 @@ build/
 .env
 ```
 
+#### 2.2. Commit
+
 Now, stage and commit the changes with the message 'create .gitignore'.
 
 ### 3. Create `package.json`
+
+#### 3.1. Action
 
 Use `npm init` with flags to pre-fill the `package.json` file. Replace the bracketed placeholders with your actual values.
 
@@ -51,18 +59,26 @@ npm init -y \
   --init-license="[LICENSE]"
 ```
 
+#### 3.2. Commit
+
 Now, stage and commit the changes. The commit message should be the command you ran, including all flags and values.
 
-Next, edit the generated `package.json` file:
+#### 3.3. Action
 
-- Change `main` to `"main.js"`.
-- Update `name` to your `[PLUGIN_ID]`.
-- Fill in the `description` with the value from the "Prerequisites" section.
-- Remove any placeholder fields that aren't appropriate for the project or that we won't need, like the 'test' script that just prints an error.
+Next, edit the generated `package.json` file using the following commands. Be sure to replace the bracketed placeholders with your actual values.
+
+```bash
+npm pkg set name="[PLUGIN_ID]"
+npm pkg set description="[PLUGIN_DESCRIPTION]"
+npm pkg set main="index.js"
+npm pkg delete scripts.test
+```
+
+#### 3.4. Commit
 
 Now, stage and commit the changes with the message 'customize package.json'.
 
-**Verification:**
+#### 3.5. Verification
 
 Run the following command to ensure `package.json` is valid. You should see your plugin ID printed with no errors.
 
@@ -72,13 +88,17 @@ node -p "require('./package.json').name"
 
 ### 4. Install Dependencies
 
+#### 4.1. Action
+
 ```bash
 npm install --save-dev dotenv esbuild gts obsidian typescript builtin-modules
 ```
 
+#### 4.2. Commit
+
 Now, stage and commit the changes with the message 'npm install --save-dev dotenv esbuild gts obsidian typescript builtin-modules'.
 
-**Verification:**
+#### 4.3. Verification
 
 The `npm install` command should have completed without errors. You should also see a `node_modules` directory and a `package-lock.json` file.
 
@@ -88,17 +108,18 @@ ls -d node_modules package-lock.json
 
 ### 5. Initialize GTS
 
+#### 5.1. Action
+
 ```bash
 # Initialize Google TypeScript Style (creates tsconfig.json, .eslintrc.json, .prettierrc.js, and more)
 npx gts init --yes
-
-# Remove the unnecessary index.ts file created by gts
-rm src/index.ts
 ```
 
-Now, stage and commit the changes with the message 'npx gts init --yes'.
+#### 5.2. Commit
 
-**Verification:**
+Now, stage and commit the changes with the message 'npx gts init --yes'. Include package-lock.json if it was modified.
+
+#### 5.3. Verification
 
 Check that the GTS configuration files were created.
 
@@ -107,6 +128,8 @@ ls .eslintrc.json tsconfig.json .prettierrc.js
 ```
 
 ### 6. Add and revise scripts in package.json
+
+#### 6.1. Action
 
 Edit package.json to include this block:
 
@@ -124,16 +147,18 @@ Edit package.json to include this block:
     "test": "node --test --experimental-test-module-mocks build/test/*.test.js build/test/**/*.test.js",
     "pretest": "npm run compile",
     "posttest": "npm run lint",
-    "package": "npm run build && cd build && zip -r [PLUGIN_ID].zip main.js manifest.json styles.css",
+    "package": "npm run build && cd build && zip -r [PLUGIN_ID].zip index.js manifest.json styles.css",
     "deploy_local": "node scripts/deploy-local.mjs"
   },
   …
 }
 ```
 
+#### 6.2. Commit
+
 Now, stage and commit the changes with the message 'add scripts package.json'.
 
-**Verification:**
+#### 6.3. Verification
 
 Run the `clean` script to verify the scripts are working.
 
@@ -144,6 +169,8 @@ npm run clean
 ### 7. Customize Generated Configuration Files
 
 The `npx gts init` command creates several configuration files. You'll need to customize some of them:
+
+#### 7.1. Action
 
 **Update `.eslintrc.json`** to allow importing 'obsidian':
 
@@ -157,15 +184,19 @@ The `npx gts init` command creates several configuration files. You'll need to c
 }
 ```
 
+#### 7.2. Commit
+
 Now, stage and commit the changes with the message 'configure eslint'.
 
-**Verification:**
+#### 7.3. Verification
 
 Run the linter. It's okay if it reports that no files were checked.
 
 ```bash
 npm run lint
 ```
+
+#### 7.4. Action
 
 **Update `tsconfig.json`** for Obsidian plugin development:
 
@@ -188,9 +219,11 @@ npm run lint
 }
 ```
 
+#### 7.5. Commit
+
 Now, stage and commit the changes with the message 'configure typescript'.
 
-**Verification:**
+#### 7.6. Verification
 
 Run the TypeScript compiler. It should report no errors, even if no source files are present yet.
 
@@ -199,6 +232,8 @@ npm run compile
 ```
 
 ### 8. Update EditorConfig
+
+#### 8.1. Action
 
 Note: GTS already created `.editorconfig`. Verify it contains:
 
@@ -213,9 +248,13 @@ charset = utf-8
 insert_final_newline = true
 ```
 
+#### 8.2. Commit
+
 If any changes were necessary, stage and commit the changes with the message 'configure editor'.
 
 ### 9. Create Build and Deploy Scripts
+
+#### 9.1. Action
 
 Create `esbuild.config.mjs` (this is a hand-written configuration file specific to your project):
 
@@ -248,7 +287,7 @@ const context = await esbuild.context({
   banner: {
     js: banner,
   },
-  entryPoints: ["src/main.ts"],
+  entryPoints: ["src/index.ts"],
   bundle: true,
   external: ["obsidian", "electron", ...builtins],
   format: "cjs",
@@ -256,7 +295,7 @@ const context = await esbuild.context({
   logLevel: "info",
   sourcemap: prod ? false : "inline",
   treeShaking: true,
-  outfile: "build/main.js",
+  outfile: "build/index.js",
   minify: prod,
   plugins: [copyPlugin],
 });
@@ -268,6 +307,8 @@ if (prod) {
   await context.watch();
 }
 ```
+
+#### 9.2. Action
 
 Create `scripts/deploy-local.mjs`:
 
@@ -285,7 +326,7 @@ if (!pluginDir) {
 }
 mkdirSync(pluginDir, { recursive: true });
 
-["main.js", "manifest.json", "styles.css"].forEach((file) => {
+["index.js", "manifest.json", "styles.css"].forEach((file) => {
   const src = join("build", file);
   const dest = join(pluginDir, file);
   copyFileSync(src, dest);
@@ -294,9 +335,13 @@ mkdirSync(pluginDir, { recursive: true });
 console.log("Deployed to", pluginDir);
 ```
 
+#### 9.3. Commit
+
 Now, stage and commit the changes with the message 'create build and deploy scripts'.
 
 ### 10. Create Plugin Source Files
+
+#### 10.1. Action
 
 Create `src/manifest.json`:
 
@@ -312,9 +357,13 @@ Create `src/manifest.json`:
 }
 ```
 
+#### 10.2. Action
+
 Create an empty file at `src/styles.css`
 
-Create `src/main.ts`:
+#### 10.3. Action
+
+Create `src/index.ts`:
 
 ```typescript
 import {Plugin} from 'obsidian';
@@ -330,9 +379,11 @@ export default class [PLUGIN_NAME]Plugin extends Plugin {
 }
 ```
 
+#### 10.4. Commit
+
 Now, stage and commit the changes with the message 'create plugin source files'.
 
-**Verification:**
+#### 10.5. Verification
 
 Test the build system. This will compile the source code and copy artifacts to the `build` directory.
 
@@ -342,6 +393,8 @@ npm run build
 
 ### 11. Set Up Git Hooks
 
+#### 11.1. Action
+
 Create `.git/hooks/pre-commit`:
 
 ```bash
@@ -349,15 +402,21 @@ Create `.git/hooks/pre-commit`:
 npm run fix
 ```
 
+#### 11.2. Action
+
 Make it executable:
 
 ```bash
 chmod +x .git/hooks/pre-commit
 ```
 
+#### 11.3. Commit
+
 Now, stage and commit the changes with the message 'set up pre-commit hook'.
 
 ### 12. Set Up Local Development Environment
+
+#### 12.1. Action
 
 Create `.env` file:
 
@@ -365,9 +424,11 @@ Create `.env` file:
 OBSIDIAN_PLUGIN_PATH=[VAULT_PATH]/.obsidian/plugins/[PLUGIN_ID]
 ```
 
+#### 12.2. Commit
+
 Now, stage and commit the changes with the message 'create .env file'.
 
-**Verification:**
+#### 12.3. Verification
 
 Test the local deployment script. This requires the `build` directory to exist from the previous step.
 
@@ -377,7 +438,9 @@ npm run deploy_local
 
 ### 13. Create Basic Test
 
-Create `test/main.test.ts`:
+#### 13.1. Action
+
+Create `test/index.test.ts`:
 
 ```typescript
 import { test } from "node:test";
@@ -389,9 +452,11 @@ void test("basic test infrastructure works", () => {
 });
 ```
 
+#### 13.2. Commit
+
 Now, stage and commit the changes with the message 'create basic test'.
 
-**Verification:**
+#### 13.3. Verification
 
 Run the tests.
 
@@ -401,7 +466,11 @@ npm run test
 
 ### 14. Create README.md
 
+#### 14.1. Action
+
 Compose a standard README.md based on what you can glean about the project. Add the sections that are commonly found in a GitHub project.
+
+#### 14.2. Commit
 
 Now, stage and commit the changes with the message 'create README.md'.
 
