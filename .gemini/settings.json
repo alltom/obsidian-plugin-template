@@ -1,1 +1,5 @@
-{ "contextFileName": "AGENTS.md" }
+{
+  "contextFileName": "AGENTS.md",
+  "toolDiscoveryCommand": "node .gemini/tools/task-tool.cjs discover",
+  "toolCallCommand": ".gemini/tools/task-tool.cjs"
+}
