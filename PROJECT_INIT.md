@@ -15,11 +15,11 @@ Before starting, you'll need to decide on the following information:
 7. **Author Email** - For the package.json author field
 8. **Local Obsidian Vault Path** - The path to your Obsidian vault for testing (e.g., `/Users/yourname/Documents/MyVault`)
 
-## Planning and Preparation
-
-Before you begin, it's a good idea to have a plan for tracking your progress. You can create a simple checklist or a more detailed project plan. Make sure you have gathered all the information listed in the "Prerequisites" section above.
-
 ## Step-by-Step Setup
+
+### 0. Set up a system to track your progress
+
+There are many steps! Make a checklist for yourself to track your progress. Include every single step and substep in your checklist to ensure you don't miss anything.
 
 ### 1. Initialize Project Structure
 
