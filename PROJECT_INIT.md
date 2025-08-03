@@ -70,7 +70,7 @@ Next, edit the generated `package.json` file using the following commands. Be su
 ```bash
 npm pkg set name="[PLUGIN_ID]"
 npm pkg set description="[PLUGIN_DESCRIPTION]"
-npm pkg set main="index.js"
+npm pkg set main="main.js"
 npm pkg delete scripts.test
 ```
 
@@ -147,7 +147,7 @@ Edit package.json to include this block:
     "test": "node --test --experimental-test-module-mocks build/test/*.test.js build/test/**/*.test.js",
     "pretest": "npm run compile",
     "posttest": "npm run lint",
-    "package": "npm run build && cd build && zip -r [PLUGIN_ID].zip index.js manifest.json styles.css",
+    "package": "npm run build && cd build && zip -r [PLUGIN_ID].zip main.js manifest.json styles.css",
     "deploy_local": "node scripts/deploy-local.mjs"
   },
   …
@@ -287,7 +287,7 @@ const context = await esbuild.context({
   banner: {
     js: banner,
   },
-  entryPoints: ["src/index.ts"],
+  entryPoints: ["src/main.ts"],
   bundle: true,
   external: ["obsidian", "electron", ...builtins],
   format: "cjs",
@@ -295,7 +295,7 @@ const context = await esbuild.context({
   logLevel: "info",
   sourcemap: prod ? false : "inline",
   treeShaking: true,
-  outfile: "build/index.js",
+  outfile: "build/main.js",
   minify: prod,
   plugins: [copyPlugin],
 });
@@ -326,7 +326,7 @@ if (!pluginDir) {
 }
 mkdirSync(pluginDir, { recursive: true });
 
-["index.js", "manifest.json", "styles.css"].forEach((file) => {
+["main.js", "manifest.json", "styles.css"].forEach((file) => {
   const src = join("build", file);
   const dest = join(pluginDir, file);
   copyFileSync(src, dest);
@@ -363,7 +363,7 @@ Create an empty file at `src/styles.css`
 
 #### 10.3. Action
 
-Create `src/index.ts`:
+Create `src/main.ts`:
 
 ```typescript
 import {Plugin} from 'obsidian';
@@ -436,7 +436,7 @@ Now, stage and commit the changes with the message 'create .env file'.
 
 #### 13.1. Action
 
-Create `test/index.test.ts`:
+Create `test/main.test.ts`:
 
 ```typescript
 import { test } from "node:test";
