@@ -410,10 +410,6 @@ Make it executable:
 chmod +x .git/hooks/pre-commit
 ```
 
-#### 11.3. Commit
-
-Now, stage and commit the changes with the message 'set up pre-commit hook'.
-
 ### 12. Set Up Local Development Environment
 
 #### 12.1. Action
