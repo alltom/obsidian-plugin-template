@@ -74,17 +74,17 @@ npm pkg set main="index.js"
 npm pkg delete scripts.test
 ```
 
-#### 3.4. Commit
-
-Now, stage and commit the changes with the message 'customize package.json'.
-
-#### 3.5. Verification
+#### 3.4. Verification
 
 Run the following command to ensure `package.json` is valid. You should see your plugin ID printed with no errors.
 
 ```bash
 node -p "require('./package.json').name"
 ```
+
+#### 3.5. Commit
+
+Now, stage and commit the changes with the message 'customize package.json'.
 
 ### 4. Install Dependencies
 
@@ -94,17 +94,17 @@ node -p "require('./package.json').name"
 npm install --save-dev dotenv esbuild gts obsidian typescript builtin-modules
 ```
 
-#### 4.2. Commit
-
-Now, stage and commit the changes with the message 'npm install --save-dev dotenv esbuild gts obsidian typescript builtin-modules'.
-
-#### 4.3. Verification
+#### 4.2. Verification
 
 The `npm install` command should have completed without errors. You should also see a `node_modules` directory and a `package-lock.json` file.
 
 ```bash
 ls -d node_modules package-lock.json
 ```
+
+#### 4.3. Commit
+
+Now, stage and commit the changes with the message 'npm install --save-dev dotenv esbuild gts obsidian typescript builtin-modules'.
 
 ### 5. Initialize GTS
 
@@ -115,17 +115,17 @@ ls -d node_modules package-lock.json
 npx gts init --yes
 ```
 
-#### 5.2. Commit
-
-Now, stage and commit the changes with the message 'npx gts init --yes'. Include package-lock.json if it was modified.
-
-#### 5.3. Verification
+#### 5.2. Verification
 
 Check that the GTS configuration files were created.
 
 ```bash
 ls .eslintrc.json tsconfig.json .prettierrc.js
 ```
+
+#### 5.3. Commit
+
+Now, stage and commit the changes with the message 'npx gts init --yes'. Include package-lock.json if it was modified.
 
 ### 6. Add and revise scripts in package.json
 
@@ -154,17 +154,17 @@ Edit package.json to include this block:
 }
 ```
 
-#### 6.2. Commit
-
-Now, stage and commit the changes with the message 'add scripts package.json'.
-
-#### 6.3. Verification
+#### 6.2. Verification
 
 Run the `clean` script to verify the scripts are working.
 
 ```bash
 npm run clean
 ```
+
+#### 6.3. Commit
+
+Now, stage and commit the changes with the message 'add scripts package.json'.
 
 ### 7. Customize Generated Configuration Files
 
@@ -184,17 +184,17 @@ The `npx gts init` command creates several configuration files. You'll need to c
 }
 ```
 
-#### 7.2. Commit
-
-Now, stage and commit the changes with the message 'configure eslint'.
-
-#### 7.3. Verification
+#### 7.2. Verification
 
 Run the linter. It's okay if it reports that no files were checked.
 
 ```bash
 npm run lint
 ```
+
+#### 7.3. Commit
+
+Now, stage and commit the changes with the message 'configure eslint'.
 
 #### 7.4. Action
 
@@ -219,17 +219,17 @@ npm run lint
 }
 ```
 
-#### 7.5. Commit
-
-Now, stage and commit the changes with the message 'configure typescript'.
-
-#### 7.6. Verification
+#### 7.5. Verification
 
 Run the TypeScript compiler. It should report no errors, even if no source files are present yet.
 
 ```bash
 npm run compile
 ```
+
+#### 7.6. Commit
+
+Now, stage and commit the changes with the message 'configure typescript'.
 
 ### 8. Update EditorConfig
 
@@ -379,17 +379,17 @@ export default class [PLUGIN_NAME]Plugin extends Plugin {
 }
 ```
 
-#### 10.4. Commit
-
-Now, stage and commit the changes with the message 'create plugin source files'.
-
-#### 10.5. Verification
+#### 10.4. Verification
 
 Test the build system. This will compile the source code and copy artifacts to the `build` directory.
 
 ```bash
 npm run build
 ```
+
+#### 10.5. Commit
+
+Now, stage and commit the changes with the message 'create plugin source files'.
 
 ### 11. Set Up Git Hooks
 
@@ -420,17 +420,17 @@ Create `.env` file:
 OBSIDIAN_PLUGIN_PATH=[VAULT_PATH]/.obsidian/plugins/[PLUGIN_ID]
 ```
 
-#### 12.2. Commit
-
-Now, stage and commit the changes with the message 'create .env file'.
-
-#### 12.3. Verification
+#### 12.2. Verification
 
 Test the local deployment script. This requires the `build` directory to exist from the previous step.
 
 ```bash
 npm run deploy_local
 ```
+
+#### 12.3. Commit
+
+Now, stage and commit the changes with the message 'create .env file'.
 
 ### 13. Create Basic Test
 
@@ -448,17 +448,17 @@ void test("basic test infrastructure works", () => {
 });
 ```
 
-#### 13.2. Commit
-
-Now, stage and commit the changes with the message 'create basic test'.
-
-#### 13.3. Verification
+#### 13.2. Verification
 
 Run the tests.
 
 ```bash
 npm run test
 ```
+
+#### 13.3. Commit
+
+Now, stage and commit the changes with the message 'create basic test'.
 
 ### 14. Create README.md
 
