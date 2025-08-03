@@ -4,7 +4,7 @@ This document provides step-by-step instructions for creating a new Obsidian plu
 
 ## Prerequisites
 
-Before starting, you'll need to decide on the following information:
+Before starting, you'll need to decide on the following information, so prompt the user for it:
 
 1. **Plugin ID** (e.g., `obsidian-foo`) - Used in manifest.json and as the directory name. Must be unique in the Obsidian plugin ecosystem.
 2. **Plugin Name** (e.g., `Foo`) - The display name users will see
