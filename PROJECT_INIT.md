@@ -366,7 +366,7 @@ Create an empty file at `src/styles.css`
 Create `src/main.ts`:
 
 ```typescript
-import {Plugin} from 'obsidian';
+import {Plugin} from './obsidianWrapper';
 
 export default class [PLUGIN_NAME]Plugin extends Plugin {
   override async onload() {
@@ -379,7 +379,15 @@ export default class [PLUGIN_NAME]Plugin extends Plugin {
 }
 ```
 
-#### 10.4. Verification
+#### 10.4. Action
+
+Create `src/obsidianWrapper.ts` (enables mocking Obsidian API in tests):
+
+```typescript
+export * from 'obsidian';
+```
+
+#### 10.5. Verification
 
 Test the build system. This will compile the source code and copy artifacts to the `build` directory.
 
@@ -387,7 +395,7 @@ Test the build system. This will compile the source code and copy artifacts to t
 npm run build
 ```
 
-#### 10.5. Commit
+#### 10.6. Commit
 
 Now, stage and commit the changes with the message 'create plugin source files'.
 
@@ -439,12 +447,40 @@ Now, stage and commit the changes with the message 'create .env file'.
 Create `test/main.test.ts`:
 
 ```typescript
-import { test } from "node:test";
-import * as assert from "node:assert";
+import {describe, it, mock, before} from 'node:test';
+import * as assert from 'node:assert';
 
-void test("basic test infrastructure works", () => {
-  // Basic test to verify test infrastructure works
-  assert.equal(1 + 1, 2);
+void describe('[PLUGIN_NAME]Plugin', () => {
+  const mockPlugin = {
+    loadData: mock.fn(() => Promise.resolve(undefined)),
+    saveData: mock.fn(() => Promise.resolve()),
+  };
+
+  let [PLUGIN_NAME]Plugin: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+
+  before(async () => {
+    // Mock the obsidianWrapper module
+    mock.module('../src/obsidianWrapper.js', {
+      namedExports: {
+        Plugin: class MockPlugin {
+          loadData = mockPlugin.loadData;
+          saveData = mockPlugin.saveData;
+        },
+      },
+    });
+
+    // Dynamic import MUST happen after mock.module
+    const mainModule = await import('../src/main.js');
+    [PLUGIN_NAME]Plugin = mainModule.default;
+  });
+
+  void it('should load plugin successfully', async () => {
+    const plugin = new [PLUGIN_NAME]Plugin();
+    await plugin.onload();
+
+    // Plugin loaded successfully
+    assert.ok(plugin);
+  });
 });
 ```
 
